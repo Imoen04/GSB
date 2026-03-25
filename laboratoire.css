@@ -1,0 +1,74 @@
+/* ===== LABORATOIRE ===== */
+
+.lab-section {
+    padding: 60px 10%;
+    background-color: #f4f4f4;
+    line-height: 1.7;
+}
+
+.lab-section h2 {
+    color: #2e7d32;
+    margin-bottom: 40px;
+    font-size: 32px;
+}
+
+/* bloc texte + image */
+.lab-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* inversion gauche/droite */
+.lab-content.reverse {
+    flex-direction: row-reverse;
+}
+
+/* texte */
+.lab-text {
+    flex: 1;
+}
+
+/* image */
+.lab-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* taille image */
+.lab-image img {
+    width: 80%;
+    max-width: 350px;
+    border-radius: 10px;
+}
+
+/* liste */
+.lab-section ul {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.lab-section li {
+    margin-bottom: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+
+    .lab-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .lab-content.reverse {
+        flex-direction: column;
+    }
+
+    .lab-image img {
+        width: 70%;
+    }
+
+}
