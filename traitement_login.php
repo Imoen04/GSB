@@ -28,9 +28,13 @@ if (!empty($_POST['identifiant']) && !empty($_POST['mdp'])) {
         }
     }
 
-    echo "Identifiants incorrects";
+    // REDIRECTION AVEC ERREUR
+    header("Location: espace-visiteur.php?error=invalid");
+    exit();
 
 } else {
-    echo "Veuillez remplir tous les champs";
+    // REDIRECTION AVEC ERREUR
+    header("Location: espace-visiteur.php?error=empty");
+    exit();
 }
 ?>

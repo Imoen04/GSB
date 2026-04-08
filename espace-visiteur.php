@@ -38,6 +38,15 @@ session_start();
             header('Location: profil.php');
             exit();
         }
+
+        // Afficher les messages d'erreur
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] == 'invalid') {
+                echo '<p class="error-message">Identifiants incorrects. Veuillez vérifier votre identifiant et mot de passe.</p>';
+            } elseif ($_GET['error'] == 'empty') {
+                echo '<p class="error-message">Veuillez remplir tous les champs.</p>';
+            }
+        }
         ?>
 
         <form id="loginForm" method="post" action="traitement_login.php">
