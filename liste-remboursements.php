@@ -21,9 +21,13 @@ $pdo->exec(
     "nuitees INT NOT NULL, " .
     "kilometres DECIMAL(10,2) NOT NULL, " .
     "repas DECIMAL(10,2) NOT NULL, " .
+    "date_depense DATE NOT NULL, " .
     "created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP" .
     ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
 );
+
+// Ajouter la colonne date_depense si elle n'existe pas
+$pdo->exec("ALTER TABLE remboursement ADD COLUMN IF NOT EXISTS date_depense DATE NOT NULL DEFAULT '0000-00-00'");
 
 // Récupérer les demandes
 $stmt = $pdo->query('SELECT * FROM remboursement ORDER BY created_at DESC');
@@ -76,7 +80,8 @@ $remboursements = $stmt->fetchAll();
                             <th>Nuitées</th>
                             <th>Kilomètres</th>
                             <th>Repas</th>
-                            <th>Date</th>
+                            <th>Date dépense</th>
+                            <th>Date demande</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,6 +91,7 @@ $remboursements = $stmt->fetchAll();
                                 <td><?php echo htmlspecialchars($row['nuitees'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($row['kilometres'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($row['repas'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlspecialchars($row['date_depense'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($row['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                         <?php endforeach; ?>

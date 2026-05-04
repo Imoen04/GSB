@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nuitees = isset($_POST['nuitees']) ? intval($_POST['nuitees']) : 0;
     $kilometres = isset($_POST['kilometres']) ? floatval($_POST['kilometres']) : 0;
     $repas = isset($_POST['repas']) ? floatval($_POST['repas']) : 0;
+    $date = isset($_POST['date']) ? $_POST['date'] : '';
 
     // Table de stockage (créée si elle n'existe pas)
     $pdo->exec(
@@ -35,14 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "nuitees INT NOT NULL, " .
         "kilometres DECIMAL(10,2) NOT NULL, " .
         "repas DECIMAL(10,2) NOT NULL, " .
+        "date_depense DATE NOT NULL, " .
         "created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP" .
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
     );
 
+    // Ajouter la colonne date_depense si elle n'existe pas
+    $pdo->exec("ALTER TABLE remboursement ADD COLUMN IF NOT EXISTS date_depense DATE NOT NULL DEFAULT '0000-00-00'");
+
     $stmt = $pdo->prepare(
-        'INSERT INTO remboursement (etapes, nuitees, kilometres, repas) VALUES (?, ?, ?, ?)'
+        'INSERT INTO remboursement (etapes, nuitees, kilometres, repas, date_depense) VALUES (?, ?, ?, ?, ?)'
     );
-    $stmt->execute([$etapes, $nuitees, $kilometres, $repas]);
+    $stmt->execute([$etapes, $nuitees, $kilometres, $repas, $date]);
 
     $message = 'Données enregistrées avec succès.';
 }
@@ -109,7 +114,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="number" id="repas" name="repas" min="0" step="1" value="0" placeholder="0" required />
                 </div>
             </div>
-
+            <div class="form-row">
+                <div>
+                    <label for="date">Date de la dépense :</label>
+                    <input type="date" id="date" name="date" required />
+                </div>
+            </div>
             <button type="submit" class="btn">Envoyer</button>
         </form>
     </div>
